@@ -1,0 +1,37 @@
+#coding:gb2312
+from bs4 import BeautifulSoup
+import urllib
+import urllib2
+
+#常量
+ROOT_URL = "http://www.dytt8.net/"
+BASE_URL = "http://www.dytt8.net/html/gndy/dyzz/list_23_%s.html"
+MAX_COUNT = 120
+
+index = 0
+while index <= MAX_COUNT:
+    # 索引
+    index += 1
+
+    # 获取到了url
+    URL = BASE_URL % index
+    print URL
+
+    request = urllib2.Request(URL)
+    html = urllib2.urlopen(request)
+    #获取soup
+    soup = BeautifulSoup(html, from_encoding="gb2312")
+    html.close()
+
+
+
+    # 遍历进入最新电影
+
+    for link in soup.find_all('a', {'class': 'ulink'}):
+
+        # 获取电影详情页的连接
+        detailedLink = ROOT_URL + link["href"]
+        print detailedLink
+
+
+

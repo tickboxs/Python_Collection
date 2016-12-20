@@ -1,0 +1,28 @@
+#coding:gb2312
+from bs4 import BeautifulSoup
+import urllib
+import urllib2
+
+#常量
+ROOT_URL = "http://tieba.baidu.com/"
+POST_URL = ROOT_URL + "p/"
+
+#index为贴吧帖子的索引 可以自己设定
+index = 0
+
+while (True):
+    index += 1
+
+    # 获取到了url
+    URL = POST_URL + str(index)
+    print URL
+
+    request = urllib2.Request(URL)
+    html = urllib2.urlopen(request)
+    #获取soup
+    soup = BeautifulSoup(html)
+    html.close()
+
+    # 遍历所有帖子图片
+    for tag in soup.find_all('img', {'class': 'BDE_Image'}):
+        print tag["src"]
